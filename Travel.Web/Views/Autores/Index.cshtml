@@ -1,0 +1,153 @@
+﻿@model AutoresViewModel
+@{
+    ViewData["Title"] = "Autores";
+}
+<br />
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- general form elements disabled -->
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Listado General Autores</h3>
+            </div>
+            <div class="card-body">
+                <input type="button" value="Nuevo" class="btn btn-info float-left" onclick="newR();" />
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-warning card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-edit"></i>&nbsp;Listado Autores</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="tbAutores" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            @*<th scope="col" hidden="hidden">Id</th>*@
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Nombres</th>
+                                            <th scope="col">Apellidos</th>
+                                            <th scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbData">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </div>
+    </div>
+</section>
+
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Autor</h5>
+            </div>
+            <form id="frmEnviarEdit" method="post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input asp-for="Id_Autor" type="number" class="form-control" id="idAutorEdit" value="0" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Nombres<strong style="color:red">*</strong></h6>
+                                                <input asp-for="Nombres_Autor" type="text" class="form-control" id="nameAutorEdit" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Apellidos<strong style="color:red">*</strong></h6>
+                                                <input asp-for="Apellidos_Autor" type="text" class="form-control" id="apellidoAutorEdit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveEdit();">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="new" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingresar Autor</h5>
+            </div>
+            <form id="frmEnviarNew" method="post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input asp-for="Id_Autor" type="number" class="form-control" id="idAutor" value="0" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Nombres<strong style="color:red">*</strong></h6>
+                                                <input asp-for="Nombres_Autor" type="text" class="form-control" id="nameAutor" />
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Apellidos<strong style="color:red">*</strong></h6>
+                                                <input asp-for="Apellidos_Autor" type="text" class="form-control" id="apellidoAutor" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" onclick="saveNew();">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/js/generic.js"></script>
+<script src="~/js/autores.js"></script>

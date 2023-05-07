@@ -1,0 +1,205 @@
+﻿@model LibrosViewModel
+@{
+    ViewData["Title"] = "Libros";
+}
+<br />
+<section class="content">
+    <div class="container-fluid">
+
+        <!-- general form elements disabled -->
+        <div class="card card-info">
+            <div class="card-header">
+                <h3 class="card-title">Listado General Libros</h3>
+            </div>
+            <div class="card-body">
+                <input type="button" value="Nuevo" class="btn btn-info float-left" onclick="newR();" />
+            </div>
+            <!-- /.card-header -->
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-warning card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title"><i class="fas fa-edit"></i>&nbsp;Listado Libros</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="tbLibros" class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" hidden="hidden">Id</th>
+                                            <th scope="col">ISBN</th>
+                                            <th scope="col">Titulo</th>
+                                            <th scope="col">Autor</th>
+                                            <th scope="col">Editorial</th>
+                                            <th scope="col">Opciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="tbData">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+            </div>
+            <!-- /.card -->
+
+        </div>
+    </div>
+</section>
+<div class="modal fade" id="edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Editar Libro</h5>
+            </div>
+            <form id="frmEnviarEdit" method="post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input asp-for="Id_Libro" type="number" class="form-control" id="idLibroEdit" value="0" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input asp-for="Id_Autor_Libro" type="number" class="form-control" id="idAutorLibroEdit" hidden="hidden" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>ISBN<strong style="color:red">*</strong></h6>
+                                                <input asp-for="ISBN" type="text" class="form-control" id="iSBNLibroEdit" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Título<strong style="color:red">*</strong></h6>
+                                                <input asp-for="Titulo" type="text" class="form-control" id="tituloLibroEdit" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Sinopsis<strong style="color:red">*</strong></h6>
+                                                <textarea asp-for="Sinopsis" type="multil" class="form-control" id="sinopsisLibroEdit" style="height:100px"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6># Páginas<strong style="color:red">*</strong></h6>
+                                                <input asp-for="N_Paginas" type="text" class="form-control" id="n_PaginasLibroEdit" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Autor<strong style="color:red">*</strong></h6>
+                                                <select asp-for="Id_Autor" type="text" class="form-control" id="autorLibroEdit"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Editorial<strong style="color:red">*</strong></h6>
+                                                <select asp-for="Id_Editorial" type="text" class="form-control" id="editorialLibroEdit"></select>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" onclick="saveEdit();">Guardar</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="new" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Ingresar Libro</h5>
+            </div>
+            <form id="frmEnviarNew" method="post">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <input asp-for="Id_Libro" type="number" class="form-control" id="idLibro" value="0" readonly="readonly" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>ISBN<strong style="color:red">*</strong></h6>
+                                                <input asp-for="ISBN" type="text" class="form-control" id="iSBNLibro" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Título<strong style="color:red">*</strong></h6>
+                                                <input asp-for="Titulo" type="text" class="form-control" id="tituloLibro" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Sinopsis<strong style="color:red">*</strong></h6>
+                                                <textarea asp-for="Sinopsis" type="multil" class="form-control" id="sinopsisLibro" style="height:100px"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6># Páginas<strong style="color:red">*</strong></h6>
+                                                <input asp-for="N_Paginas" type="text" class="form-control" id="n_PaginasLibro" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Autor<strong style="color:red">*</strong></h6>
+                                                <select asp-for="Id_Autor" type="text" class="form-control" id="autorLibro"></select>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <h6>Editorial<strong style="color:red">*</strong></h6>
+                                                <select asp-for="Id_Editorial" type="text" class="form-control" id="editorialLibro"></select>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary" onclick="saveNew();">Save</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/plugins/jquery/jquery.min.js"></script>
+<script src="~/js/generic.js"></script>
+<script src="~/js/libros.js"></script>

@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <partial name="_Css" />
+</head>
+<body class="hold-transition sidebar-mini layout-navbar-fixed text-sm">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        <!-- Preloader -->
+        @*        <div class="preloader flex-column justify-content-center align-items-center">
+        <img class="animation__shake" src="~/img/laproff.png" alt="AdminLTELogo" height="60" width="auto">
+        </div>*@
+        <partial name="_TopNavbar" />
+        <!-- Main Sidebar Container -->
+        <partial name="_LeftSidebar" />
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <section class="content">
+                <!--TODO CAMBIAR RUTA-->
+                <input type="hidden" id="ambiente" value="LOC" />
+                <input type="hidden" id="hdfOculto" value="@Url.Content("~")" />
+                <main role="main" class="pb-3">
+                    @RenderBody()
+                </main>
+            </section>
+        </div>
+        <partial name="_Footer" />
+    </div>
+    <partial name="_Script" />
+    <script type="text/javascript">
+        // AdminLTe 3.0.x
+        /** add active class and stay opened when selected */
+        var url = window.location;
+
+        // for sidebar menu entirely but not cover treeview
+        $('ul.nav-sidebar a').filter(function () {
+            return this.href == url;
+        }).addClass('active');
+
+        // for treeview
+        $('ul.nav-treeview a').filter(function () {
+            return this.href == url;
+        }).parentsUntil(".nav-sidebar > .nav-treeview").addClass('menu-open').prev('a').addClass('active');
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
+
+
